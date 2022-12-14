@@ -8,7 +8,7 @@ mongoose.connect("mongodb://localhost:27017/serverDB", { useNewUrlParser: true }
     const app = express();
     app.use(express.json())
     app.use("/api",router);
-    app.use('api', authRoutes);
+    app.use('/api/user', authRoutes);
    
 
     app.listen(2002, () => {

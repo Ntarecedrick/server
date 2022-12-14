@@ -5,6 +5,7 @@ const { validateBlog, validateComment } = require('../validation/validateBlog');
 const { validateMessage } = require('../validation/validateMessage');
 const router = express.Router();
 
+const verify = require('./verifyToken')
 // Blogs Routes
 
 router.get("/blogs", async (req, res) => {
@@ -13,7 +14,7 @@ router.get("/blogs", async (req, res) => {
 })
 
 // BLOG POST 
-router.post("/blogs", async (req, res) => {
+router.post("/blogs",verify, async (req, res) => {
     const { error, value } = validateBlog(req.body)
 
     if (error) {
