@@ -1,9 +1,18 @@
 import express from 'express';
+import deleteBlog from '../controllers/deleteblog';
 import  getBlog  from '../controllers/getBlog';
+import getBlogLikes from '../controllers/getBlogLikes';
+import getBlogUnLikes from '../controllers/getBlogUnlikes';
+import getMessage from '../controllers/getMessage';
+import getSingleBlog from '../controllers/getSingleBlog';
+import getSingleComment from '../controllers/getSingleComment';
+import getOneMessage from '../controllers/getSingleMessage';
 import  postMyBlog from '../controllers/postBlog';
 import  postNewComment  from '../controllers/postComment';
 import  postNewLikes  from '../controllers/postLikes';
+import postMessages from '../controllers/postMessage';
 import postUnLike from '../controllers/postUnLike'
+import updateBlog from '../controllers/updateBlog';
 import Blog from '../models/Blog';
 import Message from '../models/Message';
 import { validateComment } from '../validation/validateBlog';
@@ -22,130 +31,36 @@ router.post('/blogs/:id/likes', postNewLikes);
 // unlike post
 router.post('/blogs/:id/unlike', postUnLike)
 
-// BLOG GET
+// BLOG GET 
 
-router.get("/blogs/:id", async (req, res) => {
-    try {
-        const blog = await Blog.findOne({ _id: req.params.id })
-        res.send(blog)
-    } catch {
-        res.status(404)
-        res.send({ error: "Blog doesn't exist!" })
-    }
-});
-router.get('/blogs/:id/comments', async (req, res) => {
-    try {
-        const blog = await blog.findOne({ _id: req.params.id });
-        res.send(blog.comments);
-    } catch {
-        res.status(404)
-        res.send({ error: "Blog doesn't exist!" })
-    }
-})
-router.get('/blogs/:id/likes', async (req, res) => {
-    try {
-        const blog = await Blog.findOne({ _id: req.params.id });
-        res.send(blog);
-    } catch {
-        res.status(404)
-        res.send({ error: "Blog doesn't exist!" })
-    }
-})
-router.get('/blogs/:id/unlike', async (res, req) => {
-    try {
-        const blog = await Blog.findOne({ _id: req.params.id });
-        res.send(blog);
-    } catch {
-        res.status(404)
-        res.send({ error: "Blog doesn't exist!" })
-    }
-})
+router.get("/blogs/:id",getSingleBlog);
+
+// get Blog Comment 
+router.get('/blogs/:id/comments', getSingleComment)
+// get blog likes
+router.get('/blogs/:id/likes', getBlogLikes)
+// get blog Unlikes
+router.get('/blogs/:id/unlike', getBlogUnLikes )
 
 // BLOGB PATCH
 
-router.patch("/blogs/:id", async (req, res) => {
-    try {
-        const blog = await Blog.findOne({ _id: req.params.id });
-        if (req.body.title) {
-            blog.title = req.body.title
-        }
-        if (req.body.content) {
-            blog.content = req.body.content
-        }
-        if (req.body.image) {
-            blog.image = req.body.image
-        }
-        await blog.save();
-        res.send(blog)
-    } catch {
-        res.status(404)
-        res.send({ error: "blog doesn't exist!" })
-    }
-})
-
+router.patch("/blogs/:id", updateBlog)
 
 // BLOG DELETE 
-
-router.delete("/blogs/:id", async (req, res) => {
-    try {
-        await Blog.deleteOne({ _id: req.params.id })
-        res.status(204).send();
-    } catch {
-        res.status(404);
-        res.send({ error: "Blog doesn't exist!" });
-    }
-})
-router.delete('/blogs/:id/comments', async (req, res) => {
-    try {
-        await Blog.deleteOne({ _id: req.params.id })
-        res.status(204).send();
-    } catch {
-        res.status(404);
-        res.send({ error: "Blog doesn't exist!" });
-    }
-})
+router.delete("/blogs/:id", deleteBlog)
 
 // routes for Message
 
 // Message GET
 
-router.get('/Messages', async (req, res) => {
-    const messages = await Message.find();
-    res.send(messages)
-});
+router.get('/Messages', getMessage);
 
 // Message Post
 
-router.post('/Messages', async (req, res) => {
-    const { error, value } = validateMessage(req.body);
-
-    if (error) {
-        return res.send(error.details)
-    } else {
-        const message = new Message({
-            name: req.body.name,
-            email: req.body.email,
-            message: req.body.message,
-        })
-        await message.save();
-        return res.send(message)
-    }
-
-});
+router.post('/Messages', postMessages);
 
 // Get Message 
 
-router.get('/Messages/:id', async (req, res) => {
-    try {
-        const message = await Message.findOne({ _id: req.params.id });
-        res.send(message)
-    } catch {
-        res.status(404)
-        res.send({ error: "message doesn't exist!" })
-    }
+router.get('/Messages/:id',getOneMessage )
 
-
-
-})
-
-module.exports = router
+export default router
