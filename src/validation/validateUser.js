@@ -1,6 +1,6 @@
 const { string } = require('joi');
 const joi = require('joi');
-const user= require('../models/user');
+const user= require('../src/models/user');
 
 
 

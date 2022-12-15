@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const router = require('./routes/router');
-const authRoutes= require('./routes/auth');
+const router = require('./src/routes/router');
+const authRoutes= require('./src/routes/auth');
 
 mongoose.set('strictQuery', false)
 mongoose.connect("mongodb://localhost:27017/serverDB", { useNewUrlParser: true }).then(() => {
