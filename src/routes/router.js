@@ -1,80 +1,26 @@
 const express = require('express');
+const { getBlog } = require('../controllers/getBlog');
+const { postMyBlog } = require('../controllers/postBlog');
+const { postNewComment } = require('../controllers/postComment');
+const { postNewLikes } = require('../controllers/postLikes');
+// const { postDisLike } = require('../controllers/postUnlike')
 const Blog = require('../models/Blog');
 const Message = require('../models/Message');
-const { validateBlog, validateComment } = require('../validation/validateBlog');
+const { validateComment } = require('../validation/validateBlog');
 const { validateMessage } = require('../validation/validateMessage');
 const router = express.Router();
 
 const verify = require('./verifyToken')
 // Blogs Routes
-
-router.get("/blogs", async (req, res) => {
-    const blogs = await Blog.find()
-    res.send(blogs)
-})
-
+router.get("/blogs", getBlog);
 // BLOG POST 
-router.post("/blogs",verify, async (req, res) => {
-    const { error, value } = validateBlog(req.body)
-
-    if (error) {
-        return res.send(error.details.map((e) => {
-            return e.message
-        }))
-    } else {
-        const blog = new Blog({
-            title: req.body.title,
-            content: req.body.content,
-            image: req.body.image,
-            likes: req.body.likes,
-        })
-        await blog.save();
-        return res.send(blog)
-    }
-
-});
-
-
-router.post('/blogs/:id/comments', async (req, res) => {
-    const blog = await Blog.findOne({ _id: req.params.id })
-    const { error, value } = validateComment(req.body)
-
-    if (error) {
-        return res.send(error.details)
-    } else {
-        const comment = {
-            name: req.body.name,
-            email: req.body.email,
-            message: req.body.message,
-        }
-        blog.comments.push(comment)
-        await blog.save();
-        return res.send(blog)
-    }
-
-});
-
-
-router.post('/blogs/:id/likes', async (req, res) => {
-    const blog = await Blog.findOne({ _id: req.params.id });
-    if (blog.likes == null) {
-        blog.likes = 0;
-        blog.likes++
-    } else {
-        blog.likes++
-    }
-    await blog.save();
-    res.send(blog);
-});
-
-router.post('/blogs/:id/unlike', async (req, res) => {
-    const blog = await Blog.findOne({ _id: req.params.id });
-    if (blog.likes == null || blog.likes == 0) {
-        blog.likes = 0
-    } else {
-        blog.likes--;
-    }
-})
+router.post("/blogs",verify, postMyBlog);
+// comment Post
+router.post('/blogs/:id/comments', postNewComment);
+// likes post 
+router.post('/blogs/:id/likes', postNewLikes);
+// unlike post
+router.post('/blogs/:id/unlike',  )
 
 // BLOG GET
 
