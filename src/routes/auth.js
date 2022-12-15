@@ -4,7 +4,7 @@ const bcrypt= require('bcryptjs')
 const User = require('../models/user');
 const jwt= require('jsonwebtoken');
 const dotenv= require('dotenv');
-const { validateUser } = require('../../validation/validateUser');
+const { validateUser } = require('../validation/validateUser');
 
 dotenv.config()
 

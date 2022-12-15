@@ -1,5 +1,5 @@
 const joi= require('joi');
-const { schema } = require('../src/models/Blog');
+const { schema } = require('../models/Blog');
 
 const validator= (schema) => (payload) => schema.validate(payload, { abortEarly: false})
 
