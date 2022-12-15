@@ -1,4 +1,4 @@
-const joi= require('joi');
+import joi from 'joi';
 
 
 const validator= (schema) => (payload) => schema.validate(payload, { abortEarly: false})
@@ -11,4 +11,6 @@ const messageSchema = joi.object({
 })
 
 
-exports.validateMessage= validator(messageSchema)
+const validateMessage= validator(messageSchema);
+
+export default validateMessage

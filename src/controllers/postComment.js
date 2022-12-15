@@ -1,4 +1,4 @@
-const { validateComment } = require('../validation/validateBlog');
+import  validateComment  from '../validation/validateBlog';
 
 
 let postComment= async (req, res) => {
@@ -19,4 +19,4 @@ let postComment= async (req, res) => {
     }
 }
 
-module.exports.postNewComment= postComment
+export default postComment

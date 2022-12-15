@@ -1,16 +1,16 @@
-const express = require('express');
-const { getBlog } = require('../controllers/getBlog');
-const { postMyBlog } = require('../controllers/postBlog');
-const { postNewComment } = require('../controllers/postComment');
-const { postNewLikes } = require('../controllers/postLikes');
-// const { postDisLike } = require('../controllers/postUnlike')
-const Blog = require('../models/Blog');
-const Message = require('../models/Message');
-const { validateComment } = require('../validation/validateBlog');
-const { validateMessage } = require('../validation/validateMessage');
+import express from 'express';
+import  getBlog  from '../controllers/getBlog';
+import  postMyBlog from '../controllers/postBlog';
+import  postNewComment  from '../controllers/postComment';
+import  postNewLikes  from '../controllers/postLikes';
+import postUnLike from '../controllers/postUnLike'
+import Blog from '../models/Blog';
+import Message from '../models/Message';
+import { validateComment } from '../validation/validateBlog';
+import { validateMessage } from '../validation/validateMessage';
 const router = express.Router();
 
-const verify = require('./verifyToken')
+import verify from './verifyToken';
 // Blogs Routes
 router.get("/blogs", getBlog);
 // BLOG POST 
@@ -20,7 +20,7 @@ router.post('/blogs/:id/comments', postNewComment);
 // likes post 
 router.post('/blogs/:id/likes', postNewLikes);
 // unlike post
-router.post('/blogs/:id/unlike',  )
+router.post('/blogs/:id/unlike', postUnLike)
 
 // BLOG GET
 

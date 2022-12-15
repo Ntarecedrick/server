@@ -1,4 +1,4 @@
-const Blog = require('../models/Blog');
+import Blog from '../models/Blog';
 
 let getSingleBlog=  async (req, res) => {
     try {
@@ -10,4 +10,4 @@ let getSingleBlog=  async (req, res) => {
     }
 }
 
-module.exports.getMySingleBlog= getSingleBlog
+export default getSingleBlog

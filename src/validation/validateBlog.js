@@ -1,4 +1,4 @@
-const joi= require('joi');
+import joi from 'joi';
 const { schema } = require('../models/Blog');
 
 const validator= (schema) => (payload) => schema.validate(payload, { abortEarly: false})

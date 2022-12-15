@@ -1,5 +1,5 @@
-const Blog = require('../models/Blog');
-const { validateBlog, validateComment } = require('../validation/validateBlog');
+import Blog from '../models/Blog';
+import validateBlog from '../validation/validateBlog';
 
 let postBlog= async (req,res)=>{
 
@@ -21,4 +21,4 @@ let postBlog= async (req,res)=>{
     }
 }
 
-module.exports.postMyBlog= postBlog
+export default postBlog

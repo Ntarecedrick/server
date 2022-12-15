@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const bcrypt= require('bcryptjs')
-const User = require('../models/user');
-const jwt= require('jsonwebtoken');
-const dotenv= require('dotenv');
-const { validateUser } = require('../validation/validateUser');
+import bcrypt from 'bcryptjs';
+import User from '../models/user';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import { validateUser } from '../validation/validateUser';
 
 dotenv.config()
 
@@ -44,4 +44,4 @@ router.post('/Login', async (req,res)=>{
     res.header('auth-token', token).send(token)
 })
 
-module.exports= router
+export default router

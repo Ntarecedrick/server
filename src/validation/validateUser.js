@@ -1,6 +1,6 @@
 const { string } = require('joi');
-const joi = require('joi');
-const user= require('../models/user');
+import joi from 'joi';
+import user from '../models/user';
 
 
 
@@ -12,4 +12,6 @@ const userSchema= joi.object({
     password: joi.string().min(6).max(100).required()
 })
 
-exports.validateUser= validator(userSchema);
+const validateUser= validator(userSchema);
+
+export default validateUser

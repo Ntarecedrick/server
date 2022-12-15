@@ -1,10 +1,13 @@
-const Blog = require('../models/Blog');
+import Blog from '../models/Blog';
 
-let blog = async (req, res) => {
+const blog = async (req, res) => {
     const blogs = await Blog.findOne();
 
     return res.send(blogs)
 }
-module.exports.getBlog = blog
+
+
+
+export default blog
 
 

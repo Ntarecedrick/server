@@ -1,4 +1,4 @@
-const Blog = require('../models/Blog');
+import Blog from '../models/Blog';
 
 let postLikes= async (req, res) => {
     const blog = await Blog.findOne({ _id: req.params.id });
@@ -12,4 +12,4 @@ let postLikes= async (req, res) => {
     res.send(blog);
 }
 
-module.exports.postNewLikes= postLikes
+export default postLikes

@@ -1,7 +1,7 @@
-const { ModulesOption } = require('@babel/preset-env/lib/options');
-const jwt = require('jsonwebtoken');
+import{ ModulesOption }  from '@babel/preset-env/lib/options';
+import jwt from 'jsonwebtoken';
 
-module.exports= auth =(req,res,next)=>{
+const auth =(req,res,next)=>{
    const token= req.header('auth-token');
 
    if(!token) return res.status(401).send('Access Denied');
@@ -13,3 +13,5 @@ module.exports= auth =(req,res,next)=>{
     res.status(400).send('invalid Token')
    }
 }
+
+export default auth

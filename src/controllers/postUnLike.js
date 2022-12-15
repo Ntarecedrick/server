@@ -1,6 +1,6 @@
 const Blog = require('../models/Blog');
 
-let PostUnlike=  async (req, res) => {
+const PostUnlike=  async (req, res) => {
     const blog = await Blog.findOne({ _id: req.params.id });
     if (blog.likes == null || blog.likes == 0) {
         blog.likes = 0
@@ -8,5 +8,6 @@ let PostUnlike=  async (req, res) => {
         blog.likes--;
     }
 }
+const postDisLike= PostUnlike;
 
-module.exports.postDisLike= PostUnlike
+export default postDisLike
