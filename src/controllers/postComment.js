@@ -1,4 +1,5 @@
-import  validateComment  from '../validation/validateBlog';
+import  validateComment  from '../validation/validateComment';
+import Blog from '../models/Blog'
 
 
 let postComment= async (req, res) => {

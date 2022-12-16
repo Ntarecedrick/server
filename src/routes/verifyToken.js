@@ -1,4 +1,3 @@
-import{ ModulesOption }  from '@babel/preset-env/lib/options';
 import jwt from 'jsonwebtoken';
 
 const auth =(req,res,next)=>{
