@@ -14,10 +14,10 @@ let postBlog= async (req,res)=>{
             title: req.body.title,
             content: req.body.content,
             image: req.body.image,
-            likes: req.body.likes,
+            // likes: req.body.likes,
         })
         await blog.save();
-        return res.send(blog)
+        return await res.send(blog)
     }
 }
 

@@ -1,12 +1,14 @@
 import Blog from '../models/Blog'
-import validateUpdates from '../validation/validateUpdateBlog';
+import validateBlog from '../validation/validateBlog';
 
 const updateBlog = async (req, res) => {
 
-    const error = validateUpdates(req.body)
+    const { error, value } = validateBlog(req.body)
 
     if (error) {
-        return res.send(error.details)
+        return res.send(error.details.map((e) => {
+            return e.message
+        }))
     } else {
         try {
             const blog = await Blog.findOne({ _id: req.params.id });
@@ -25,9 +27,6 @@ const updateBlog = async (req, res) => {
             return res.status(404).send({ error: "blog doesn't exist!" })
         }
     }
-
-
-
 }
 
 export default updateBlog

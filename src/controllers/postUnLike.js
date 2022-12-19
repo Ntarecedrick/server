@@ -1,4 +1,4 @@
-const Blog = require('../models/Blog');
+import Blog from '../models/Blog';
 
 const PostUnlike=  async (req, res) => {
     const blog = await Blog.findOne({ _id: req.params.id });
@@ -7,7 +7,9 @@ const PostUnlike=  async (req, res) => {
     } else {
         blog.likes--;
     }
+    await blog.save()
+    res.send(blog)
 }
-const postDisLike= PostUnlike;
+;
 
-export default postDisLike
+export default PostUnlike
