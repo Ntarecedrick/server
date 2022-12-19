@@ -6,9 +6,7 @@ const updateBlog = async (req, res) => {
     const error = validateUpdates(req.body)
 
     if (error) {
-        return res.send(error.details.map((e) => {
-            return e.message
-        }))
+        return res.send(error.details)
     } else {
         try {
             const blog = await Blog.findOne({ _id: req.params.id });
