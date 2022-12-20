@@ -5,7 +5,7 @@ const validator= (schema) => (payload) => schema.validate(payload, { abortEarly:
 
 
 const blogSchema= joi.object({
-    title: joi.string().required().min(1).trim(),
+    title: joi.string().required().min(5).trim(),
     content: joi.string().required().min(5).trim(),
     likes: joi.number().integer(),
     image: joi.string().required(),

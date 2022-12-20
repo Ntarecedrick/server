@@ -4,7 +4,11 @@ import mongoose from "mongoose";
 const schema= mongoose.Schema({
     title: String,
     content: String,
-    image: String, 
+    // image: {
+    //     public_id: { type: String, required: true },
+    //     url: { type: String, required: true },
+    //   },
+    image: String,
     comments: [{
         name: String,
         email: String,
