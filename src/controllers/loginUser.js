@@ -12,11 +12,10 @@ const loginUser = async (req, res) => {
     if (!ValidPassword) return res.status(400).send('invalid email or Password');
 
 
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id: user._id, name: user.name, email: user.email }, process.env.TOKEN_SECRET);
     const UserObject = {
         userName: user.name,
         userEmail: user.email,
-        userPassword: user.password,
         userToken: token
     }
     res.header('auth-token', token).send(UserObject)

@@ -1,9 +1,7 @@
 import newJwt from 'passport-jwt';
-
 import Extract from "passport-jwt";
 import passport from 'passport';
 import User from '../models/user';
-
 import dotenv from 'dotenv'
 
 dotenv.config()

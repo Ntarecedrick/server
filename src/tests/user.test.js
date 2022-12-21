@@ -1,8 +1,22 @@
-import supertest from "supertest";
+import request from 'supertest';
+import app from '../index';
 
-import  express  from "express";
 
-const app= express();
-app.use(express.json())
-app.use("/api",router);
-app.use('/user', authRoutes);
+test ('register user', async ()=>{
+    const user= await request(app).post('/user/register').send({
+        name: "example name",
+        email: "example@test.com",
+        password: "exampletest123"
+    });
+
+    expect(user.statusCode).toBe(200)
+})
+
+test('user login', async ()=>{
+    const user= await request(app).post('/user/login').send({
+        email: "example@test.com",
+        password: "exampletest123"
+    });
+
+    expect(user.statusCode).toBe(200)
+})

@@ -3,7 +3,6 @@ import express from 'express';
 import deleteBlog from '../controllers/deleteblog';
 import getBlog from '../controllers/getBlog';
 import getBlogLikes from '../controllers/getBlogLikes';
-import getBlogUnLikes from '../controllers/getBlogUnlikes';
 import getMessage from '../controllers/getMessage';
 import getSingleBlog from '../controllers/getSingleBlog';
 import getComment from '../controllers/getComment';
@@ -12,11 +11,10 @@ import postMyBlog from '../controllers/postBlog';
 import postNewComment from '../controllers/postComment';
 import postNewLikes from '../controllers/postLikes';
 import postMessages from '../controllers/postMessage';
-import postUnLike from '../controllers/postUnLike'
 import updateBlog from '../controllers/updateBlog';
-import verify from './verifyToken';
 import testpassport from "./passportverify";
 import passport from 'passport';
+import likes_Comments from '../middlewares/likes_comment'
 testpassport()
 
 
@@ -28,29 +26,25 @@ router.get("/blogs", getBlog);
 // BLOG POST 
 router.post("/blogs",passport.authenticate('jwt', { session: false }), postMyBlog);
 // comment Post
-router.post('/blogs/:id/comments', postNewComment);
+router.post('/blogs/:id/comments', likes_Comments, postNewComment);
 // likes post 
-router.post('/blogs/:id/likes', postNewLikes);
-// unlike post
-router.post('/blogs/:id/unlike', postUnLike)
+router.post('/blogs/:id/likes', likes_Comments, postNewLikes);
 // BLOG GET 
 router.get("/blogs/:id", getSingleBlog);
 // get Blog Comment 
 router.get('/blogs/:id/comments', getComment)
 // get blog likes
 router.get('/blogs/:id/likes', getBlogLikes)
-// get blog Unlikes
-router.get('/blogs/:id/unlike', getBlogUnLikes)
 // BLOGB PUT
 router.put("/blogs/:id", passport.authenticate('jwt', { session: false }), updateBlog)
 // BLOG DELETE 
-router.delete("/blogs/:id", passport.authenticate('jwt', { session: false }), deleteBlog)
+router.delete("/blogs/:id" /*, passport.authenticate('jwt', { session: false })*/, deleteBlog)
 // routes for Message
 // Message GET
-router.get('/Messages', passport.authenticate('jwt', { session: false }), getMessage);
+router.get('/messages',/* passport.authenticate('jwt', { session: false }),*/ getMessage);
 // Message Post
-router.post('/Messages', postMessages);
+router.post('/messages', postMessages);
 // Get Message 
-router.get('/Messages/:id', passport.authenticate('jwt', { session: false }), getOneMessage)
+router.get('/messages/:id'/*, passport.authenticate('jwt', { session: false })*/, getOneMessage)
 
 export default router
