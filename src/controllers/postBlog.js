@@ -8,13 +8,16 @@ let postBlog = async (req, res) => {
     if (error) {
         return res.send(error.details[0].message)
     } else {
-        // const my_pics = await cloudinary.uploader.upload(req.body.image, {
-        //     folder: 'my_pics'
-        // })
+        const my_pics = await cloudinary.uploader.upload(req.body.image, {
+            folder: 'my_pics'
+        })
         const blog = new Blog({
             title: req.body.title,
             content: req.body.content,
-            image: req.body.image
+            image: {
+                public_id: my_pics.public_id,
+                url: my_pics.secure_url
+            }
             // likes: req.body.likes,
         })
         await blog.save();

@@ -41,8 +41,8 @@ router.get('/blogs/:id/comments', getComment)
 router.get('/blogs/:id/likes', getBlogLikes)
 // get blog Unlikes
 router.get('/blogs/:id/unlike', getBlogUnLikes)
-// BLOGB PATCH
-router.patch("/blogs/:id", passport.authenticate('jwt', { session: false }), updateBlog)
+// BLOGB PUT
+router.put("/blogs/:id", passport.authenticate('jwt', { session: false }), updateBlog)
 // BLOG DELETE 
 router.delete("/blogs/:id", passport.authenticate('jwt', { session: false }), deleteBlog)
 // routes for Message

@@ -4,9 +4,9 @@ import registerUser from '../controllers/registerUser';
 import loginUser from '../controllers/loginUser';
 import passport from "passport";
 
-router.post('/Register', registerUser );
+router.post('/register', registerUser );
 
-router.post('/Login', loginUser );
+router.post('/login', loginUser );
 
 router.get('/google', passport.authenticate('google',{
     scope: ['profile']

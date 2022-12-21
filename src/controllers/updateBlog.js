@@ -1,5 +1,6 @@
 import Blog from '../models/Blog'
 import validateBlog from '../validation/validateBlog';
+import cloudinary from '../cloudinary';
 
 const updateBlog = async (req, res) => {
 
@@ -11,18 +12,28 @@ const updateBlog = async (req, res) => {
         }))
     } else {
         try {
-            const blog = await Blog.findOne({ _id: req.params.id });
-            if (req.body.title) {
-                blog.title = req.body.title
+            const {title, content, image} = req.body
+            
+            const my_pics = await cloudinary.uploader.upload(image, {
+                folder: 'my_pics'
+            })
+          const blogNew = {
+    
+            title, content, image:{
+                public_id: my_pics.public_id,
+                url: my_pics.secure_url
             }
-            if (req.body.content) {
-                blog.content = req.body.content
-            }
-            if (req.body.image) {
-                blog.image = req.body.image
-            }
-            await blog.save();
-            return res.send(blog) 
+          }
+          await Blog.findOneAndUpdate({
+            _id:req.params.id,
+          },
+          {
+            title:blogNew.title,
+            content:blogNew.content,
+            image:blogNew.image
+          }
+          );
+        res.send(blogNew)
         } catch {
             return res.status(404).send({ error: "blog doesn't exist!" })
         }

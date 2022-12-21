@@ -1,15 +1,40 @@
-import Blog from '../models/Blog';
+import ValidateLikes from '../validation/likesValidation'
+import Blog from '../models/Blog'
+let postLikes = async (req, res) => {
 
-let postLikes= async (req, res) => {
-    const blog = await Blog.findOne({ _id: req.params.id });
-    if (blog.likes == null) {
-        blog.likes = 0;
-        blog.likes++
+    const { error } = ValidateLikes(req.body);
+    if (error) {
+        return res.send(error.details[0].message)
     } else {
-        blog.likes++
+        const blog = await Blog.findOne({ _id: req.params.id });
+
+        if (!blog.likes.user.includes(req.body.email)) {
+            const updateLikes = blog.likes.likesNumber + 1;
+            const newUser= blog.likes.user
+            newUser.push(req.body.email); 
+
+            await Blog.findOneAndUpdate({ _id: req.params.id }, {
+                likes: {
+                    likesNumber: updateLikes,
+                    user: newUser
+                }
+            });
+        } else {
+            const newLikes = blog.likes.likesNumber - 1;
+            const userFilter = blog.likes.user.filter((param) => {
+                return param !== req.body.email
+            });
+            await Blog.findOneAndUpdate({ _id: req.params.id }, {
+                likes: {
+                    likesNumber: newLikes,
+                    user: userFilter
+                }
+            })
+        }
+        const newBlog = await Blog.findOne({ _id: req.params.id });
+        res.send(newBlog)
     }
-    await blog.save();
-    res.send(blog);
+
 }
 
 export default postLikes
