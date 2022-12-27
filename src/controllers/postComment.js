@@ -10,8 +10,8 @@ let postComment= async (req, res) => {
         return res.send(error.details)
     } else {
         const comment = {
-            name: req.body.name,
-            email: req.body.email,
+            name: res.locals.name,
+            email: res.locals.email,
             message: req.body.message,
         }
         blog.comments.push(comment)
