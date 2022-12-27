@@ -2,7 +2,9 @@ import request from 'supertest';
 import app from '../index';
 import Blog from '../models/Blog'
 import { dataImage, tokenValue } from './values';
+import dotenv from 'dotenv';
 
+dotenv.config()
 
 test('should get all blogs', async () => {
     const blogs = await request(app).get("/api/blogs");
