@@ -8,6 +8,7 @@ router.post('/register', registerUser );
 
 router.post('/login', loginUser );
 
+
 router.get('/google', passport.authenticate('google',{
     scope: ['profile']
 }));
