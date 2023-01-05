@@ -5,7 +5,6 @@ import tokenValue from './values'
 
 
 test('should Send a Message', async () => {
-    // jest.setTimeout(100000);
     const message = await request(app).post("/api/messages")
     .send({
         name: "test jest",

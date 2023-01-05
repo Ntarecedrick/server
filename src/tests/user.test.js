@@ -14,8 +14,8 @@ test ('register user', async ()=>{
 
 test('user login', async ()=>{
     const user= await request(app).post('/user/login').send({
-        email: "example@test.com",
-        password: "exampletest123"
+        email: "ntarecedrick250@gmail.com",
+        password: "ntare250"
     });
 
     expect(user.statusCode).toBe(200)
