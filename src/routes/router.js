@@ -22,7 +22,7 @@ const router = express.Router();
 
 
 // Blogs Routes
-router.get("/blogs", getBlog);
+router.get("/blogs",getBlog);
 // BLOG POST 
 router.post("/blogs",passport.authenticate('jwt', { session: false }), postMyBlog);
 // comment Post
